@@ -1,0 +1,194 @@
+@import "tailwindcss" source(none);
+
+
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ivory: var(--ivory);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-beige: var(--beige);
+  --color-rose: var(--rose);
+  --color-charcoal: var(--charcoal);
+  --color-paper: var(--paper);
+  --color-aged: var(--aged);
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
+}
+
+:root {
+  --radius: 0.375rem;
+  --ivory: oklch(0.966 0.014 80);
+  --navy: oklch(0.255 0.04 252);
+  --navy-deep: oklch(0.19 0.035 252);
+  --gold: oklch(0.73 0.08 78);
+  --gold-soft: oklch(0.85 0.06 82);
+  --beige: oklch(0.92 0.025 78);
+  --rose: oklch(0.69 0.07 25);
+  --charcoal: oklch(0.27 0.006 70);
+  --paper: oklch(0.993 0.007 85);
+  --aged: oklch(0.9 0.04 80);
+
+  --background: var(--ivory);
+  --foreground: var(--charcoal);
+  --card: var(--paper);
+  --card-foreground: var(--charcoal);
+  --popover: var(--paper);
+  --popover-foreground: var(--charcoal);
+  --primary: var(--navy);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--beige);
+  --secondary-foreground: var(--charcoal);
+  --muted: var(--beige);
+  --muted-foreground: oklch(0.48 0.015 70);
+  --accent: var(--gold);
+  --accent-foreground: var(--navy-deep);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--paper);
+  --border: oklch(0.86 0.025 78);
+  --input: oklch(0.86 0.025 78);
+  --ring: var(--gold);
+
+  --shadow-photo: 0 1px 2px oklch(0.2 0.02 60 / 0.15), 0 8px 24px -6px oklch(0.2 0.02 60 / 0.28);
+  --shadow-lift: 0 2px 4px oklch(0.2 0.02 60 / 0.12), 0 24px 48px -12px oklch(0.2 0.02 60 / 0.42);
+  --gradient-dusk: linear-gradient(180deg, var(--navy-deep), var(--navy) 55%, oklch(0.36 0.05 40));
+  --gradient-sunset: linear-gradient(180deg, oklch(0.42 0.08 280) 0%, oklch(0.62 0.13 40) 45%, oklch(0.82 0.12 75) 80%, oklch(0.9 0.08 85) 100%);
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em; }
+  ::selection { background: var(--gold-soft); color: var(--navy-deep); }
+}
+
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: var(--grain);
+    opacity: 0.09;
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+}
+@utility grain-light {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: var(--grain);
+    opacity: 0.12;
+    mix-blend-mode: overlay;
+    z-index: 1;
+  }
+}
+@utility paper-texture {
+  background-color: var(--paper);
+  background-image: radial-gradient(ellipse at 20% 0%, oklch(0.95 0.03 80 / 0.7), transparent 60%),
+    radial-gradient(ellipse at 100% 100%, oklch(0.92 0.04 75 / 0.5), transparent 55%);
+}
+@utility aged-paper {
+  background-color: var(--aged);
+  background-image: radial-gradient(ellipse at 30% 20%, oklch(0.95 0.03 85), transparent 70%),
+    radial-gradient(circle at 90% 90%, oklch(0.8 0.06 65 / 0.45), transparent 45%),
+    radial-gradient(circle at 5% 95%, oklch(0.82 0.05 65 / 0.35), transparent 35%);
+}
+@utility shadow-photo { box-shadow: var(--shadow-photo); }
+@utility shadow-lift { box-shadow: var(--shadow-lift); }
+@utility bg-dusk { background-image: var(--gradient-dusk); }
+@utility bg-sunset { background-image: var(--gradient-sunset); }
+@utility text-gold-shine {
+  background: linear-gradient(100deg, var(--gold) 20%, var(--gold-soft) 45%, var(--gold) 70%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 7s ease-in-out infinite;
+}
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+@utility preserve-3d { transform-style: preserve-3d; }
+@utility backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+
+@keyframes shine { 0%,100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
+@keyframes drift { from { transform: translateX(-30%); } to { transform: translateX(130%); } }
+@keyframes glow { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .9; transform: scale(1.08); } }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+.animate-drift { animation: drift linear infinite; }
+.animate-glow { animation: glow 9s ease-in-out infinite; }
+.animate-bob { animation: bob 2.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-drift, .animate-glow, .animate-bob, .text-gold-shine { animation: none !important; }
+}
+
+/* Aircraft sidewall, recessed window trim and a snapshot from the cabin. */
+.cabin-display {
+  position: relative;
+  width: min(100%, 31rem);
+  margin-inline: auto;
+  padding: clamp(1rem, 5vw, 2.5rem) clamp(1rem, 5vw, 2.75rem) 3rem;
+  border: 1px solid #e3dfd4;
+  border-radius: 46% 46% 12px 12px / 9% 9% 12px 12px;
+  background: linear-gradient(105deg, #9c9da0, #e5e2d9 18%, #f0ede4 48%, #bcbcb7 91%, #92969b);
+  box-shadow: 0 22px 60px #080e1e75, inset 0 1px 8px #fff8;
+}
+.cabin-window {
+  display: block; position: relative; width: min(82%, 18rem); aspect-ratio: 0.68;
+  padding: clamp(.55rem, 3vw, 1.2rem); margin-inline: auto; border-radius: 48% / 33%;
+  background: linear-gradient(132deg,#faf8f0,#c0bbb2 35%,#8a8987 60%,#e7e1d6);
+  box-shadow: 0 1px 3px #272a3259, 0 14px 22px #3433416b, inset 0 0 0 2px #fff7;
+}
+.cabin-window:focus-visible { outline: 3px solid #172538; outline-offset: 4px; }
+.cabin-recess, .cabin-glass { display: block; position: relative; height: 100%; border-radius: inherit; overflow: hidden; }
+.cabin-recess { padding: clamp(.25rem, 1.3vw, .65rem); background: #3d4146; box-shadow: inset 2px 4px 13px #161820; }
+.cabin-glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 16px 3px #19263899; background: linear-gradient(118deg,#fff4,transparent 40% 72%,#d8edff2b); }
+.cabin-sky { position: absolute; inset: 0; background: radial-gradient(ellipse at 15% 74%, #f7e5d7 0%, transparent 27%), radial-gradient(ellipse at 90% 82%, #ffedda 0%, transparent 34%), radial-gradient(ellipse at 40% 95%, #ddd1d9 0%, transparent 50%), linear-gradient(#416c9e,#94b4cf 49%,#ffd2a8 68%,#aab6cc); }
+.cabin-sky svg { width: 100%; height: 100%; }
+.cabin-latch { position: absolute; top: .45rem; left: 44%; width: 12%; height: .38rem; border-radius: 6px; background: #a09c95; box-shadow: inset 0 1px 3px #45444c70; }
